@@ -2,7 +2,7 @@ package com.viksaa.trenddit.app.di.modules
 
 import android.app.Application
 import android.content.Context
-import com.viksaa.trenddit.app.App
+import com.viksaa.trenddit.app.TredditApp
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,10 +12,10 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideApplication(app: App): Application = app
+    fun provideApplication(tredditApp: TredditApp): Application = tredditApp
 
     @Provides
     @Singleton
-    fun provideApplicationContext(app: App): Context = app.applicationContext
+    fun provideApplicationContext(tredditApp: TredditApp): Context = tredditApp.applicationContext
 
 }

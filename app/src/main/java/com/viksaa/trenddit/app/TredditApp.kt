@@ -8,9 +8,8 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class App : Application(), HasActivityInjector {
+class TredditApp : Application(), HasActivityInjector {
 
-    //TODO REMINDER: register this class in AndroidManifest.xml
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>

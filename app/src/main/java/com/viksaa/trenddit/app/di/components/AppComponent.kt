@@ -1,14 +1,13 @@
 package com.viksaa.trenddit.app.di.components
 
-import com.viksaa.trenddit.app.App
+import com.viksaa.trenddit.app.TredditApp
 import com.viksaa.trenddit.app.di.modules.ActivityInjectorsModule
-import com.viksaa.trenddit.app.di.modules.FragmentInjectorsModule
 import com.viksaa.trenddit.app.di.modules.AppModule
+import com.viksaa.trenddit.app.di.modules.FragmentInjectorsModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
-import kotlin.text.Typography.dagger
 
 @Singleton
 @Component(
@@ -23,11 +22,11 @@ interface AppComponent {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun application(application: App): Builder
+        fun application(application: TredditApp): Builder
 
         fun build(): AppComponent
     }
 
-    fun inject(app: App)
+    fun inject(tredditApp: TredditApp)
 
 }
