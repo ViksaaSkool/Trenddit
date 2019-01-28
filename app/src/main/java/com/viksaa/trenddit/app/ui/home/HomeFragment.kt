@@ -20,4 +20,6 @@ class HomeFragment : BaseFragment() {
     @ViewModelInjection
     lateinit var viewModel: ViewModelInjectionField<HomeFragmentVM>
 
+
+
 }

@@ -14,4 +14,7 @@ class HomeFragmentModule {
         fragment: HomeFragment,
         viewModelProvider: InjectionViewModelProvider<HomeFragmentVM>
     ) = viewModelProvider.get(fragment, HomeFragmentVM::class)
+
+
+
 }
