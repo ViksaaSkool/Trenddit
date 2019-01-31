@@ -10,46 +10,105 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.viksaa.trenddit.app"
-        minSdkVersion 23
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary true
+    }
+    dataBinding {
+        enabled = true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
+            zipAlignEnabled true
+            manifestPlaceholders.appName = "Trenddit"
+            versionNameSuffix "_build"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            versionNameSuffix "_debug_" + "build"
+            manifestPlaceholders.appName = "Trenddit"
+            minifyEnabled false
+            debuggable true
+            shrinkResources false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(getPropertyValue('keystore.properties', 'storePath'))
+            storePassword getPropertyValue('keystore.properties', 'storePass')
+            keyAlias getPropertyValue('keystore.properties', 'alias')
+            keyPassword getPropertyValue('keystore.properties', 'pass')
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.androidKTXVersion"
+
+    //support
+    implementation "androidx.appcompat:appcompat:$rootProject.supportVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "com.google.android.material:material:$rootProject.designVersion"
+    implementation "android.arch.lifecycle:viewmodel:$rootProject.lifecycleVersion"
+    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycleVersion"
+
+    //Test
+    testImplementation "junit:junit:$rootProject.jUnitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+
+    //Rx
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxVersion"
+}
 
 
-    def daggerVer = 2.17 // or latest version
+task setAPKName() {
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def date = new Date().format("yyyy_MM_dd_HH_mm")
+            def newApkName = variant.buildType.manifestPlaceholders.appName + variant.buildType.versionNameSuffix + "_" + date + ".apk"
+            output.outputFileName = newApkName
+        }
+    }
+}
 
-    implementation "com.google.dagger:dagger:$daggerVer"
-    implementation "com.google.dagger:dagger-android-support:$daggerVer"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVer"
-    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+gradle.taskGraph.whenReady {
+    setAPKName
+}
 
-    implementation "com.google.dagger:dagger:$daggerVer"
-    kapt  "com.google.dagger:dagger-compiler:$daggerVer"
-    implementation "com.google.dagger:dagger-android:$daggerVer"
-    kapt  "com.google.dagger:dagger-android-processor:$daggerVer"
-    implementation "com.google.dagger:dagger-android-support:$daggerVer"
-    kapt  "com.google.dagger:dagger-android-support:$daggerVer"
-
-
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+//get property file method
+def getPropertyValue(propertyFileName, propertyName) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file(propertyFileName).newDataInputStream())
+    return properties[propertyName]
 }
