@@ -43,14 +43,14 @@ android {
 
     }
 
-   /* signingConfigs {
+    signingConfigs {
         release {
             storeFile file(getPropertyValue('keystore.properties', 'storePath'))
             storePassword getPropertyValue('keystore.properties', 'storePass')
             keyAlias getPropertyValue('keystore.properties', 'alias')
             keyPassword getPropertyValue('keystore.properties', 'pass')
         }
-    }*/
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
