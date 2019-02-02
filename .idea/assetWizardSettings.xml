@@ -74,8 +74,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="fff7f2" />
-                                      <entry key="foregroundImage" value="E:\Viktor\GoogleDrive\Projects\Treddit\Resources\reddit_face_logo_small.png" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundImage" value="E:\Viktor\GoogleDrive\Projects\Treddit\Resources\reddit_face_arrow_head_shadow.png" />
                                       <entry key="legacyIconShape" value="CIRCLE" />
                                       <entry key="webIconShape" value="CIRCLE" />
                                     </map>
